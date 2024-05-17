@@ -18,9 +18,11 @@ public class TestController {
     
     private final TestService testService;
 
-    @GetMapping("/send-sms/{to}")
+    @PostMapping("/send-sms/{to}")
     public ResponseEntity<String>sendSms(@PathVariable("to")String to) {
+        System.out.println("보내짐?1");
         ResponseEntity<String> response = testService.sendSms(to);
+        System.out.println("보내짐?2");
         return response;
     }
 }

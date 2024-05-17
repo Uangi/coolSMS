@@ -14,14 +14,15 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 public class SmsProvider {
     private final DefaultMessageService messageService;
 
-    @Value("${sms.from-number}")
-    String FROM;
+    @Value("${sms.from-number}")String FROM;
+
+    String to ="01085526671";
 
     public SmsProvider(
         @Value("${sms.api-key}")String API_KEY,
         @Value("${sms.api-secret-key}")String API_SECRET_KEY,
-        @Value("${sms.domain}") String domain) {
-        this.messageService = NurigoApp.INSTANCE.initialize(API_KEY, API_SECRET_KEY, domain);
+        @Value("${sms.api-domain}") String DOMAIN) {
+        this.messageService = NurigoApp.INSTANCE.initialize(API_KEY, API_SECRET_KEY, DOMAIN);
     }
 
 
@@ -30,11 +31,11 @@ public class SmsProvider {
      */
     public boolean sendSms(String to) {
 
-        Message message = new Message();
-        message.setFrom("FROM");
-        message.setTo("to");
-        // message.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가됩니다.");
-        message.setText("문자 내용 " );
+         Message message = new Message();
+        message.setFrom(FROM);
+        message.setTo(to);
+        // message.setText("한글 45자, 영자 90자 이하 입력되면 자동으로 SMS타입의 메시지가 추가");
+        message.setText("문자 내용 " ); // 전해질 문자 내용 작성
 
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
         System.out.println(response);
